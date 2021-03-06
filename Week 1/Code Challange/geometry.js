@@ -5,7 +5,7 @@ function cubeFormula(x){
     return cubeVolume;
 }
 
-let cubeA = cubeFormula(24);
+let cubeA = cubeFormula(20);
 
 
 console.log("volume kubus A = "+cubeA+" cm3");
@@ -19,6 +19,6 @@ function tubeFormula(jarijari, tinggi){
     return volumeTabung;
 }
 
-let tabungA = tubeFormula(10,20);
+let tabungA = tubeFormula(11,21);
 
 console.log("volume tabung A = "+tabungA+" cm3");
