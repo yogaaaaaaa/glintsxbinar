@@ -26,7 +26,7 @@ function tubeFormula(jarijari, tinggi){
     return volumeTabung;
 }
 
-// let tabungA = tubeFormula(11,21);
+let tabungA = tubeFormula(11,21);
 
 // console.log("volume tabung A = "+tabungA+" cm3");
 
@@ -38,7 +38,7 @@ function input() {
  
         if (!isNaN(x) ) {
           console.log(`\n Kubus: ${cubeFormula(x)}`);
-          rl.close(); must be a number
+          rl.close();
         } else {
           console.log(`sisi harus angka\n`);
           input();
