@@ -5,8 +5,8 @@ const rl = readline.createInterface({
   output: process.stdout,
 });
 
-const cylinder = require("./function/cylinder"); // import cuboid
-const cone = require("./function/cone"); // import cube
+const cylinder = require("./function/cylinder"); // import 
+const cone = require("./function/cone"); // import 
 const sphere = require("./function/sphere");
 
 function isEmptyOrSpaces(str) {
@@ -47,4 +47,4 @@ function menu() {
 menu(); // call the menu function to display the menu
 
 module.exports.rl = rl; // export rl to make another can run the readline
-module.exports.isEmptyOrSpaces = isEmptyOrSpaces;
+module.exports.isEmptyOrSpaces = isEmptyOrSpaces
