@@ -1,2 +1,2 @@
 # GlintsXBinar
-
+yoga, kamal, dedi
