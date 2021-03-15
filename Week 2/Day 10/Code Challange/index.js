@@ -18,8 +18,7 @@ function sortAscending(data) {
 
     for (let i = 0; i < len; i++) {
       for (let j = 0; j < len; j++) {
-        //   currentElement > arr[j];
-        //   nextElement > arr[j + 1];
+       
         if (data[j] > data[j + 1]) {
           // SWAP
           let temp = data[j];
@@ -42,8 +41,7 @@ function sortDecending(data) {
 
     for (let i = 0; i < len; i++) {
       for (let j = 0; j < len; j++) {
-        //   currentElement > arr[j];
-        //   nextElement > arr[j + 1];
+       
         if (data[j] < data[j + 1]) {
           // SWAP
           let temp = data[j];
