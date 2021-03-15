@@ -1,3 +1,4 @@
+
 let option = "negative";
 
 let names = [
@@ -45,3 +46,5 @@ switch(option){
   
 
 }
+
+//module.exports ={ inputRadius }
