@@ -10,21 +10,21 @@ class TwoDimention extends Geometry {
 
   //overriding method
   introduce() {
-    super.introduce();
+    // super.introduce();
     console.log(`${this.name} this is ${this.type}`);
   }
-  calculateArea(){
-      super.introduce(`${this.name} Area`);
+  calculateArea() {
+    // super.introduce(`${this.name} Area`);
   }
 
-  calculateCircumference(){
-      console.log(`${this.name} circumference`);
+  calculateCircumference() {
+    console.log(`${this.name} circumference`);
   }
 }
 
-let twoD = new TwoDimention("two dimention");
+// let twoD = new TwoDimention("two dimention");
 
-// console.log(twoD);
-twoD.introduce();
+// // console.log(twoD);
+// twoD.introduce();
 
 module.exports = TwoDimention;

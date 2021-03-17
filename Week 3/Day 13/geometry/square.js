@@ -7,7 +7,7 @@ class Square extends TwoDimention {
   }
   //overloading method
   introduce(intro) {
-    super.introduce();
+    // super.introduce();
     console.log(`${intro}, this is ${this.name}, length ${this.length}`);
   }
 
@@ -27,4 +27,8 @@ class Square extends TwoDimention {
   }
 }
 
+//  let kotak = new Square(10);
+
+// kotak.introduce("haiii");
+// kotak.calculateArea();
 module.exports = Square;

@@ -11,7 +11,7 @@ class Rectangle extends TwoDimention {
 
   introduce(who) {
     super.introduce();
-    console.log(`${who}, this is ${this.name} \n`);
+    console.log(`${who}, this issss ${this.name} panjang = ${this.length}, lebar ${this.width}`);
   }
 
   //overriding
@@ -29,5 +29,6 @@ class Rectangle extends TwoDimention {
     console.log(`this circumference is ${circumference} cm \n`)
   }
 }
+
 
 module.exports = Rectangle;

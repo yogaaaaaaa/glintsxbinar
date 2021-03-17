@@ -10,7 +10,7 @@ class Triangle extends TwoDimention{
     //overloading method
     introduce(who){
         super.introduce();
-        console.log(`${who}, this is ${this.name} \n`);
+        console.log(`${who}, this is ${this.name} , alas ${this.base}, tinggi ${this.height}`);
     }
 
     //overriding
