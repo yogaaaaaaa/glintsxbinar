@@ -1,6 +1,6 @@
 const TwoDimention = require("./twoDimention");
 
-class Rectangle extends twoDimention{
+class Triangle extends TwoDimention{
     constructor(base, height){
         super("Triangle");
         this.base = base;

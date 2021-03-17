@@ -27,9 +27,4 @@ class Square extends TwoDimention {
   }
 }
 
-let squareOne = new Square(15);
-
-console.log(squareOne);
-squareOne.introduce("yoga");
-squareOne.calculateArea();
-squareOne.calculateCircumference();
+module.exports = Square;
