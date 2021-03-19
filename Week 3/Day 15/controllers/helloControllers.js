@@ -4,8 +4,15 @@ class HelloController{
         console.log("terminal 1");
         console.log("terminal 2");
       
-        res.send(
-          `Postman!!! ${req.query.name} kotanya ${req.params.city}`);
+
+        if(req.params.name=="yoga"){
+            res.send(
+                  `Yoga ADhipratama`);
+        }else{
+            res.send( "gsbisa");
+        }
+       
+
     }
 
     post(req, res){
