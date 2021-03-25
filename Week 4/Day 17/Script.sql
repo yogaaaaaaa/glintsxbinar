@@ -97,10 +97,6 @@ join pelanggan p on t.id_pelanggan = p.id
 join pemasok pem on b.id_pemasok = pem.id
 
 
--- select like
-
-select * from pelanggan where nama like "%cris%"
-
 
 
 
