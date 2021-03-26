@@ -1,6 +1,6 @@
 //import mysql connection
 const connection = require("../models");
-const mysql = require("../models");
+// const mysql = require("../models");
 
 //get All data from transaksi
 const getAll = (req, res) => {
@@ -8,7 +8,7 @@ const getAll = (req, res) => {
     "select t.id, p.nama as nama_pelanggan, b.nama as nama_barang, pem.nama as nama_pemasok ,  b.harga,t.waktu, t.jumlah, t.total from transaksi t join barang b on t.id_barang = b.id join pelanggan p on t.id_pelanggan = p.id join pemasok pem on b.id_pemasok = pem.id";
 
   //run the sql query
-  mysql.query(sql, (err, results) => {
+  connection.query(sql, (err, results) => {
     //if error
     if (err) {
       return res.status(500).json({
@@ -19,7 +19,7 @@ const getAll = (req, res) => {
     //if success
     return res.status(200).json({
       message: "Success",
-      data: results[0],
+      data: results,
     });
   });
 };
@@ -176,9 +176,25 @@ const deleteData = (req, res) => {
 
     //if success
     return res.status(200).json({
-      message: "berhasil dihapus",
+      message: "success",
     });
   });
 };
 
-module.exports = { getAll, create, deleteData, update, getOne }; // export getAll function
+const alterTransaksi= (req, res) => {
+  let sqlAlter = "ALTER TABLE transaksi DROP FOREIGN KEY transaksi_ibfk_1, DROP FOREIGN KEY transaksi_ibfk_2; ALTER TABLE transaksi ADD FOREIGN KEY (id_pelanggan) REFERENCES pelanggan(id) ON DELETE CASCADE ON UPDATE CASCADE; ALTER TABLE transaksi ADD FOREIGN KEY (id_barang) REFERENCES barang(id) ON DELETE CASCADE ON UPDATE CASCADE";
+    connection.query(sqlAlter, (err, results) => {
+      if (err) {
+        return res.status(500).json({
+          message: "Internal Server Error",
+          error: err,
+        });
+      }
+      return res.status(201).json({
+        message: "Table Altered",
+        data: results[0],
+      });
+    });
+  };
+
+module.exports = { getAll, create, deleteData, update, getOne, alterTransaksi }; // export getAll function

@@ -96,10 +96,24 @@ join barang b on t.id_barang = b.id
 join pelanggan p on t.id_pelanggan = p.id
 join pemasok pem on b.id_pemasok = pem.id
 
+-- select br.id, br.nama as nama_baranggg, br.harga as harga_barang, psk.nama
+-- from barang br join pemasok psk on  br.id_pemasok = psk.id
+
+select br.id, br.nama as nama_baranggg, br.harga as harga_barang, psk.nama
+from barang br, pemasok psk 
+WHERE  br.id_pemasok = psk.id
+
+
+select * from barang 
+inner join pemasok
+on barang.id = pemasok.id;
+
 
 -- select like
 
 select * from pelanggan where nama like "%cris%"
+
+SELECT * from barang;;
 
 
 
