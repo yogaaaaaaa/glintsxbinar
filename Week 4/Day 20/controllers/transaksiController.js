@@ -45,7 +45,7 @@ class TransaksiController {
   getOne(req, res) {
     transaksi
       .findOne({
-        where: { id: `${req.params.id}` },
+        where: { id: req.params.id },
         attributes: ["id", "jumlah", "total", ["createdAt", "waktu"]],
         include: [
           {
@@ -81,113 +81,21 @@ class TransaksiController {
       });
   }
 
-  // //create transaksi
-  // async create(req, res) {
-  //   try {
-  //     //find price of barang
-
-  //     let findData = await Promise.all([
-  //       barang.findOne({
-  //         where: { id: req.body.id_barang },
-  //       }),
-  //       pelanggan.findOne({
-  //         where: { id:req.body.id_pelanggan },
-  //       }),
-  //     ]);
-
-  //     if (!findData[0] || !findaData[1]) {
-  //       return res.status(404).json({
-  //         message: "Barang or Pelanggan Not Found",
-  //       });
-  //     }
-
-  //     //
-
-  //     // let findBarang = await findOne({ where: { id: req.body.id_barang } });
-
-  //     // let price = (findBarang = await barang.findOne({
-  //     //   where: { id: req.body.id_barang },
-  //     // }
-
-  //     // ));
-
-  //     //find total
-  //     let price = findData[0].harga;
-  //     let total = eval(price * req.body.jumlah);
-
-  //     let createData = await transaksi.create({
-  //       id_barang: req.body.id_barang,
-  //       id_pelanggan: req.body.id_pelanggan,
-  //       jumlah: req.body.jumlah,
-  //       total,
-  //     });
-
-  //     //find new transaksi
-  //     let data = await transaksi.findOne({
-  //       where: { id: createData.id },
-  //       attributes: ["id", "jumlah", "total", ["createdAt", "waktu"]],
-
-  //       //include is join
-  //       include: [
-  //         {
-  //           model: barang,
-  //           attributes: ["nama", "harga"],
-  //           include: [
-  //             { model: pemasok, atributes: ["nama"] },
-  //           ],
-  //         },
-
-  //         {
-  //           model: pelanggan,
-  //           attributes: ["nama"],
-  //         },
-  //       ],
-  //     });
-
-  //     return res.status(201).json({
-  //       message: "success",
-  //       data,
-  //     });
-  //   } catch (e) {
-  //     return res.status(500).json({
-  //       message: "internal server error",
-  //       error: e,
-  //     });
-  //   }
-  // }
-
+  // Create Data
   async create(req, res) {
     try {
-      // Find price of barang
-      let findData = await Promise.all([
-        barang.findOne({
-          where: { id: req.body.id_barang },
-        }),
-        pelanggan.findOne({
-          where: { id: req.body.id_pelanggan },
-        }),
-      ]);
-
-      if (!findData[0] || !findData[1]) {
-        return res.status(404).json({
-          message: "Barang or Pelanggan Not Found",
-        });
-      }
-
-      // Find total
-      let price = findData[0].harga;
-      let total = eval(price * req.body.jumlah);
-
-      let createData = await transaksi.create({
+      // console.log(req.body)
+      // Will create data
+      let createdData = await transaksi.create({
         id_barang: req.body.id_barang,
         id_pelanggan: req.body.id_pelanggan,
         jumlah: req.body.jumlah,
-        total,
+        total: req.body.total,
       });
 
       // Find the new transaksi
       let data = await transaksi.findOne({
-        where: { id: createData.id },
+        where: { id: createdData.id },
         attributes: ["id", "jumlah", "total", ["createdAt", "waktu"]], // just these attributes that showed
         include: [
           // Include is join
@@ -206,11 +114,13 @@ class TransaksiController {
         ],
       });
 
+      // If success
       return res.status(201).json({
         message: "Success",
         data,
       });
     } catch (e) {
+      // If error
       return res.status(500).json({
         message: "Internal Server Error",
         error: e,
@@ -218,6 +128,83 @@ class TransaksiController {
     }
   }
 
+  // Update data
+  async update(req, res) {
+    let update = {
+      id_barang: req.body.id_barang,
+      id_pelanggan: req.body.id_pelanggan,
+      jumlah: req.body.jumlah,
+      total: req.body.total,
+    };
+
+    try {
+      // Transaksi table update data
+      let updatedData = await transaksi.update(update, {
+        where: {
+          id: req.params.id,
+        },
+      });
+
+      // Find the updated transaksi
+      let data = await transaksi.findOne({
+        where: { id: req.params.id },
+        attributes: ["id", "jumlah", "total", ["createdAt", "waktu"]], // just these attributes that showed
+        include: [
+          // Include is join
+          {
+            model: barang,
+            attributes: ["nama", "harga"], // just this attrubute from Barang that showed
+            include: [
+              // Include is join
+              { model: pemasok, attributes: ["nama"] },
+            ],
+          },
+          {
+            model: pelanggan,
+            attributes: ["nama"], // just this attrubute from Pelanggan that showed
+          },
+        ],
+      });
+
+      // If success
+      return res.status(201).json({
+        message: "Success",
+        data,
+      });
+    } catch (e) {
+      // If error
+      return res.status(500).json({
+        message: "Internal Server Error",
+        error: e,
+      });
+    }
+  }
+
+
+  async delete(req, res) {
+    try {
+      // Delete data
+      let data = await transaksi.destroy({ where: { id: req.params.id } });
+
+      // If data deleted is null
+      if (!data) {
+        return res.status(404).json({
+          message: "Transaksi Not Found",
+        });
+      }
+
+      // If success
+      return res.status(200).json({
+        message: "Success delete transaksi",
+      });
+    } catch (e) {
+      // If error
+      return res.status(500).json({
+        message: "Internal Server Error",
+        error: e,
+      });
+    }
+  }
 }
 
 module.exports = new TransaksiController();

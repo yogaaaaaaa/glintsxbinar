@@ -37,7 +37,21 @@ module.exports = {
         type: Sequelize.DATE,
       },
     });
-    
+      // Make id_barang foreign key
+      await queryInterface.addConstraint("transaksi", {
+        fields: ["id_barang"],
+        type: "foreign key",
+        name: "custom_fkey_id_barang",
+        references: {
+          //Required field
+          table: "barang",
+          field: "id",
+        },
+        onDelete: "cascade",
+        onUpdate: "cascade",
+      });
+  
+    // Make id_pelanggan foreign key
     await queryInterface.addConstraint("transaksi", {
       fields: ["id_pelanggan"],
       type: "foreign key",
