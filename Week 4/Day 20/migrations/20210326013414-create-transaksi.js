@@ -37,6 +37,7 @@ module.exports = {
         type: Sequelize.DATE,
       },
     });
+    
     await queryInterface.addConstraint("transaksi", {
       fields: ["id_pelanggan"],
       type: "foreign key",
