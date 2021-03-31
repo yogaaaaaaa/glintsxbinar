@@ -4,10 +4,10 @@ class TransaksiController {
   //get all datas
   async getAll(req, res) {
     try {
-      const dbConnection = connection.db("penjualan"); // connect to db penjualan
+      const dbConnection = connection.db("penjualan_development"); // connect to db penjualan
       const transaksi = dbConnection.collection("transaksi"); // connect to table/collection transaksi
 
-      let data = transaksi.find({}).toArray();
+      let data = await transaksi.find({}).toArray();
 
       //if no data
       if (data.length === 0) {
