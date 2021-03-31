@@ -26,6 +26,7 @@ module.exports.create = async (req, res, next) => {
       errors.push("Pelanggan Not Found");
     }
 
+    //if jumlah is not number
     if (!validator.isNumeric(req.body.jumlah)) {
       errors.push("Jumlah must be a number");
     }

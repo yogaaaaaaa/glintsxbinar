@@ -46,7 +46,8 @@ module.exports.imageUpload = (req, res, next) => {
     if (err instanceof multer.MulterError) {
       // A Multer error occurred when uploading.
       return res.status(422).json({
-        error: err,
+        // error: err,
+        message: "File must be an image",
       });
     } else if (err) {
       // An unknown error occurred when uploading.

@@ -22,7 +22,7 @@ module.exports = (sequelize, DataTypes) => {
       sequelize,
       paranoid: true, //activate soft delete
       timestamps: true, //track time
-      freezeTableName: true, //because qw use indonesian words
+      freezeTableName: true, //because we use indonesian word
       modelName: "barang", //
     }
   );

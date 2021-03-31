@@ -5,6 +5,7 @@ const bodyParser = require("body-parser"); // post body handler
 
 // Import routes
 const transaksiRoutes = require("./routes/transaksiRoutes.js");
+const barangRoutes = require("./routes/barangRoutes.js");
 
 //Set body parser for HTTP post operation
 app.use(bodyParser.json()); // support json encoded bodies
@@ -21,6 +22,7 @@ require("./utils/associations"); // Import table relationship
 
 
 app.use("/transaksi", transaksiRoutes); // if accessing localhost:3000/transaksi/* we will go to transaksiRoutes
+app.use("/barang", barangRoutes); // if accessing localhost:3000/transaksi/* we will go to transaksiRoutes
 
 // Server running
 app.listen(3000, () => console.log("server running on port 3000"));
