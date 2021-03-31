@@ -10,4 +10,9 @@ const barangController = require("../controllers/barangController");
 // Then, go to transaksiValidator.create
 // If in the transaksiValidator.create can run the next(), it will go to transaksiController.create
 router.post("/", imageUpload, barangValidator.create, barangController.create);
+router.get("/", barangController.getAll);
+router.get("/:id", barangController.getOne);
+router.put("/:id", barangValidator.update, barangController.update);
+// router.put("/:id", barangController.update);
+router.delete("/:id", barangController.delete);
 module.exports = router; // Export router

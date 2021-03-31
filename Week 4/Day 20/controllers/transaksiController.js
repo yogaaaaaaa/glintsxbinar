@@ -180,7 +180,6 @@ class TransaksiController {
     }
   }
 
-
   async delete(req, res) {
     try {
       // Delete data
