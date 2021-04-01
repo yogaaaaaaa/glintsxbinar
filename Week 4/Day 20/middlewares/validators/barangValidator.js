@@ -65,7 +65,7 @@ module.exports.update = async (req, res, next) => {
     }
 
     if (!validator.isNumeric(req.body.harga)) {
-      errors.push("Jumlah must be a number");
+      errors.push("harga must be a number");
     }
 
     // If errors length > 0, it will make errors message
