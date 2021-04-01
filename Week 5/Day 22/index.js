@@ -3,8 +3,6 @@ require("dotenv").config({
   path: `.env.${process.env.NODE_ENV}`,
 });
 
-const dotenv = require("dotenv"); // import dotenv
-// const patj = require('path');
 const express = require("express"); // import express
 
 //import router
