@@ -7,12 +7,12 @@ const PelangganSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    photo:{
-        type:String,
-        requried: false,
-        default: null,
-        get: getPhoto,
-    }
+    photo: {
+      type: String,
+      requried: false,
+      default: null,
+      get: getPhoto,
+    },
   },
   {
     timestamps: {
@@ -24,15 +24,10 @@ const PelangganSchema = new mongoose.Schema(
 
 //getterPhoto
 
-function getPhoto(photo){
-    return `/images/${photo}`;
+function getPhoto(photo) {
+  return `/images/${photo}`;
 }
-
 
 PelangganSchema.plugin(mongooseDelete, { overrideMethods: "all" });
 
-module.exports =  mongoose.model(
-  "pelanggan",
-  PelangganSchema,
-  "pelanggan"
-);
+module.exports = mongoose.model("pelanggan", PelangganSchema, "pelanggan");

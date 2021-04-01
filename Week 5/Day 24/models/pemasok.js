@@ -1,30 +1,31 @@
 const mongoose = require("mongoose");
-const mongooseDelete = require('mongoose-delete');
+const mongooseDelete = require("mongoose-delete");
 
-const PemasokSchema = new mongoose.Schema({
-  nama: {
-    type: String,
-    required: true
+const PemasokSchema = new mongoose.Schema(
+  {
+    nama: {
+      type: String,
+      required: true,
+    },
+    photo: {
+      type: String,
+      requried: false,
+      default: null,
+      get: getPhoto,
+    },
   },
-  photo:{
-    type:String,
-    requried: false,
-    default: null,
-    get: getPhoto,
-}
-}, {
-  timestamps: {
-    createdAt: 'created_at',
-    updatedAt: 'updated_at'
+  {
+    timestamps: {
+      createdAt: "created_at",
+      updatedAt: "updated_at",
+    },
   }
-});
+);
 
-
-function getPhoto(photo){
-    return `/images/${photo}`;
+function getPhoto(photo) {
+  return `/images/${photo}`;
 }
 
+PemasokSchema.plugin(mongooseDelete, { overrideMethods: "all" });
 
-PemasokSchema.plugin(mongooseDelete, { overrideMethods: 'all' });
-
-module.exports = mongoose.model('pemasok', PemasokSchema, 'pemasok');
+module.exports = mongoose.model("pemasok", PemasokSchema, "pemasok");
