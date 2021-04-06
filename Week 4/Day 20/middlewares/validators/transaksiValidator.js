@@ -1,7 +1,7 @@
 const { transaksi, barang, pelanggan, pemasok } = require("../../models"); // Import all models
 const validator = require("validator"); // Import validator
 
-module.exports.create = async (req, res, next) => {
+create = async (req, res, next) => {
   try {
     // Find barang and pelanggan
     let findData = await Promise.all([
@@ -48,14 +48,15 @@ module.exports.create = async (req, res, next) => {
     // It means that will be go to the next middleware
     next();
   } catch (e) {
+    console.log(e)
     return res.status(500).json({
-      message: "Internal Server Error",
+      message: "Internal Server Errorrrrrr",
       error: e,
     });
   }
 };
 
-module.exports.update = async (req, res, next) => {
+update = async (req, res, next) => {
   try {
     // Find barang, pelanggan, transaksi
     let findData = await Promise.all([
@@ -115,3 +116,5 @@ module.exports.update = async (req, res, next) => {
     });
   }
 };
+
+module.exports =  {create, update}

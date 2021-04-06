@@ -1,54 +1,50 @@
 const validator = require("validator");
 const { ObjectId } = require("mongodb");
 const connection = require("../../models");
+const { pemasok } = require("../../../Day 24/models");
 // const penjualan = connection.db("penjualan_development");
 // const transaksi = penjualan.collection("transaksi");
 
 exports.create = async (req, res, next) => {
   try {
-   // get barang amd pelanggan
+    // get barang amd pelanggan
     const penjualan = connection.db("penjualan_development");
-    const transaksi = penjualan.collection("transaksi");
+    const pemasok = penjualan.collection("pemasok");
+    // const barang = penjualan.collection("barang");
 
     // console.log(req.body.id_barang);
-    let findData = await Promise.all([
-      penjualan.collection("barang").findOne({
-        _id: new ObjectId(req.body.barang),
-      }),
-      penjualan.collection("pelanggan").findOne({
-        _id: new ObjectId(req.body.pelanggan),
-      }),
-    ]);
-    
-    
+    // let findData = await Promise.all([
+    //   penjualan.collection("pemasok").findOne({
+    //     _id: new ObjectId(req.body.id_pemasok),
+    //   }),
+    // ]);
+
+    let findPemasok = await pemasok.findOne({
+      _id: new ObjectId(req.body.pemasok),
+    });
+
     //create errors variable
     let errors = [];
 
-    //if barang not found
-    if (!findData[0]) {
-      errors.push("barang not found");
+    //if pemasok not found
+    if (!findPemasok) {
+      errors.push("ga ada pemasok");
     }
 
-    //if pelanggan not n=found
-    if (!findData[1]) {
-      errors.push("pelanggan not found");
-    }
-
-    if (!validator.isNumeric(req.body.jumlah)) {
+    if (!validator.isNumeric(req.body.harga)) {
       errors.push("jumlah must be a number");
     }
+    // let pemasokLength = req.body.pemasok; 
+    // if(pemasokLength.length>24 || pemasokLength.length<24 ){
+    //   errors.push("id harus 24 karakter hex ");
+    // }
 
-    //if errors length > =, it will display several errors
+
     if (errors.length > 0) {
       return res.status(400).json({
         message: errors.join(", "),
       });
     }
-    // console.log(findData[0]['harga']);
-    req.body.barang = findData[0];
-    req.body.pelanggan = findData[1];
-    req.body.total = eval(findData[0].harga.toString()) * req.body.jumlah; //calculation of transaksi
-    
     next();
   } catch (e) {
     console.log(e);
@@ -57,22 +53,19 @@ exports.create = async (req, res, next) => {
       error: e,
     });
   }
-  
 };
 
 exports.update = async (req, res, next) => {
   try {
     const penjualan = connection.db("penjualan_development");
-    const transaksi = penjualan.collection("transaksi");
+    const pemasok = penjualan.collection("pemasok");
+    const barang = penjualan.collection("barang");
     // Get barang and pelanggan
     let findData = await Promise.all([
-      penjualan.collection("barang").findOne({
-        _id: new ObjectId(req.body.barang),
+      penjualan.collection("pemasok").findOne({
+        _id: new ObjectId(req.body.pemasok),
       }),
-      penjualan.collection("pelanggan").findOne({
-        _id: new ObjectId(req.body.pelanggan),
-      }),
-      transaksi.findOne({
+      barang.findOne({
         _id: new ObjectId(req.params.id),
       }),
     ]);
@@ -82,39 +75,30 @@ exports.update = async (req, res, next) => {
 
     // If barang not found
     if (!findData[0]) {
-      errors.push("Barang Not Found");
+      errors.push("pemasok Not Found");
     }
 
     // If pelanggan not found
     if (!findData[1]) {
-      errors.push("Pelanggan Not Found");
+      errors.push("barang Not Found");
     }
 
-    if (!findData[2]) {
-      errors.push("Transaksi Not Found");
-    }
-
-    if (!validator.isNumeric(req.body.jumlah)) {
+    if (!validator.isNumeric(req.body.harga)) {
       errors.push("Jumlah must be a number");
     }
 
     // If errors length > 0, it will make errors message
     if (errors.length > 0) {
       // Because bad request
-      console.log(errors)
       return res.status(400).json({
         message: errors.join(", "),
       });
     }
 
-    // add some req.body for used in Controller
-    req.body.barang = findData[0];
-    req.body.pelanggan = findData[1];
-    req.body.total = eval(findData[0].harga.toString()) * req.body.jumlah; // Calculate total of transaksi
-
     // It means that will be go to the next middleware
     next();
   } catch (e) {
+    console.log(e)
     return res.status(500).json({
       message: "Internal Server Error",
       error: e,

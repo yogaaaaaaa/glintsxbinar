@@ -1,19 +1,19 @@
 const { ObjectId } = require("mongodb");
 const connection = require("../models");
 
-class TransaksiController {
+class BarangController {
   //get all datas
   async getAll(req, res) {
     try {
       // const transaksi = dbConnection.collection("transaksi"); // connect to table/collection transaksi
       const dbConnection = connection.db("penjualan_development"); // connect to db penjualan
-      const transaksi = dbConnection.collection("transaksi"); // connect to db penjualan
-      let data = await transaksi.find({}).toArray();
+      const barang = dbConnection.collection("barang"); // connect to db penjualan
+      let data = await barang.find({}).toArray();
 
       //if no data
       if (data.length === 0) {
         return res.status(404).json({
-          mesage: "Transaksi not found",
+          mesage: "barang ga ada",
         });
       }
 
@@ -34,9 +34,9 @@ class TransaksiController {
   async getOne(req, res) {
     try {
       const dbConnection = connection.db("penjualan_development"); // connect to db penjualan
-      const transaksi = dbConnection.collection("transaksi"); // connect to db penjualan
+      const barang = dbConnection.collection("barang"); // connect to db penjualan
       // Find one data
-      let data = await transaksi.findOne({
+      let data = await barang.findOne({
         _id: new ObjectId(req.params.id),
       });
 
@@ -57,14 +57,14 @@ class TransaksiController {
   async create(req, res) {
     try {
       const dbConnection = connection.db("penjualan_development"); // connect to db penjualan
-      const transaksi = dbConnection.collection("transaksi"); // connect to db penjualan
+      const barang = dbConnection.collection("barang"); // connect to db penjualan
       // Insert data transaksi
       // console.log(req.body.barang)
-      let data = await transaksi.insertOne({
-        barang: req.body.barang,
-        pelanggan: req.body.pelanggan,
-        jumlah: req.body.jumlah,
-        total: req.body.total,
+      let data = await barang.insertOne({
+        nama: req.body.nama,
+        harga: req.body.harga,
+        pemasok: req.body.pemasok
+        
       });
 
       // If success
@@ -84,24 +84,23 @@ class TransaksiController {
   async update(req, res) {
     try {
       const dbConnection = connection.db("penjualan_development"); // connect to db penjualan
-      const transaksi = dbConnection.collection("transaksi"); // connect to db penjualan
+      const barang = dbConnection.collection("barang"); // connect to db penjualan
       // Update data transaksi
-      await transaksi.updateOne(
+      await barang.updateOne(
         {
           _id: new ObjectId(req.params.id),
         },
         {
           $set: {
-            barang: req.body.barang,
-            pelanggan: req.body.pelanggan,
-            jumlah: req.body.jumlah,
-            total: req.body.total,
+            nama: req.body.nama,
+            harga: req.body.harga,
+            pemasok: req.body.pemasok
           },
         }
       );
 
       // Find data that updated
-      let data = await transaksi.findOne({
+      let data = await barang.findOne({
         _id: new ObjectId(req.params.id),
       });
 
@@ -112,6 +111,7 @@ class TransaksiController {
       });
     } catch (e) {
       // If failed
+      console.log(e)
       return res.status(500).json({
         message: "Internal Server Error",
         error: e,
@@ -123,15 +123,15 @@ class TransaksiController {
   async delete(req, res) {
     try {
       const dbConnection = connection.db("penjualan_development"); // connect to db penjualan
-      const transaksi = dbConnection.collection("transaksi"); // connect to db penjualan
+      const barang = dbConnection.collection("barang"); // connect to db penjualan
       // delete data depends on req.params.id
-      let data = await transaksi.deleteOne({
+      let data = await barang.deleteOne({
         _id: new ObjectId(req.params.id),
       });
 
       // If success
       return res.status(200).json({
-        message: "Success to delete transaksi",
+        message: "Success to delete barang",
       });
     } catch (e) {
       // If failed
@@ -143,4 +143,4 @@ class TransaksiController {
   }
 }
 
-module.exports = new TransaksiController();
+module.exports = new BarangController();

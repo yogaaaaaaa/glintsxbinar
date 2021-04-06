@@ -13,6 +13,7 @@ router.get("/", transaksiController.getAll);
 
 // Create data
 router.post("/", transaksiValidator.create, transaksiController.create);
+// router.post("/", transaksiController.create);
 
 // Get One Data
 router.get("/:id", transaksiController.getOne);
